@@ -14,6 +14,33 @@ document.addEventListener("DOMContentLoaded", function() {
         setTimeout(producaoAutomatica, intervaloProducao);
     }
 
+document.querySelectorAll('.info').forEach(function(span) {
+    span.addEventListener('click', function() {
+        let descricao;
+        switch (span.previousElementSibling.textContent) {
+            case "Frigideira de Inox":
+                descricao = "Dobra a quantidade de quentinhas por clique.";
+                break;
+            case "Frigideira de Aço Cirúrgico":
+                descricao = "Permite a produção de 4 quentinhas por clique.";
+                break;
+            case "Forno a Lenha":
+                descricao = "Permite a produção e venda de pizzas.";
+                break;
+            case "Caixa registradora":
+                descricao = "Dobra o valor de venda de cada quentinha.";
+                break;
+            case "Cozinheiro":
+                descricao = "Aumenta a produção automática de quentinhas.";
+                break;
+            case "The Bear":
+                descricao = "Produz mais 10 quentinhas automaticamente a cada segundo.";
+                break;
+        }
+        alert(descricao);
+    });
+});
+
     document.getElementById('iniciarJogo').addEventListener('click', function() {
         const nomeRestaurante = prompt('Qual é o nome do seu restaurante?');
         if (nomeRestaurante) {
