@@ -12,29 +12,32 @@
 <div id="menu">
     <h2>Bem-vindo ao Jogo das Quentinhas!</h2>
     <button id="iniciarJogo">Iniciar Jogo</button>
-    <button id="apagarDados">Apagar todos os dados</button>
 </div>
 
 <div id="game" style="display: none;">
     <h2>Seu Restaurante</h2>
+    <p id="itensComprados" style="font-size: smaller;"></p>
+    <p id="precoQuentinha" style="font-size: smaller;">Preço por quentinha: 1 grana</p>
+    <p id="prodQuentinhaPorSeg" style="font-size: smaller;">Produção automática: 1 quentinha/10s</p>
     <p id="quentinhas">Quentinhas: 0</p>
+    <p id="pizzas" style="display: none;">Pizzas: 0</p>
     <p id="grana">Grana: 0</p>
     <button id="produzirQuentinha">Produzir quentinha</button>
+    <button id="produzirPizza" style="display: none;">Fazer Pizza</button>
+    <button id="venderPizza" style="display: none;">Vender Pizza</button>
     <button id="venderQuentinha">Vender Quentinhas</button>
     <button id="goToShop">Ir para loja</button>
 </div>
 
 <div id="loja" style="display: none;">
-    <h2>Loja</h2>
+    <h3>Loja</h3>
+    <button class="itemLoja" data-custo="750">Frigideira de Inox</button><span class="custo">Custo: 750 grana</span><br>
+    <button class="itemLoja" data-custo="3500" style="display: none;">Frigideira de Aço Cirúrgico</button><span class="custo" style="display: none;">Custo: 3500 grana</span><br>
+    <button class="itemLoja" data-custo="10000" style="display: none;">Forno a Lenha</button><span class="custo" style="display: none;">Custo: 10000 grana</span><br>
+    <button class="itemLoja" data-custo="300">Caixa registradora</button><span class="custo">Custo: 300 grana</span><br>
+    <button class="itemLoja" data-custo="80">Cozinheiro</button><span class="custo">Custo: 80 grana</span><br>
+    <button class="itemLoja" data-custo="8000" style="display: none;">The Bear</button><span class="custo" style="display: none;">Custo: 8000 grana</span><br>
     <p id="granaLoja">Grana: 0</p>
-    <button class="itemLoja" data-custo="300">Caixa registradora</button>
-    <p class="custo">Custa 300 grana</p>
-    <button class="itemLoja" data-custo="80">Cozinheiro</button>
-    <p class="custo">Custa 80 grana</p>
-    <button class="itemLoja" data-custo="650">Fogão de 4 bocas</button>
-    <p class="custo">Custa 650 grana</p>
-    <button class="itemLoja" data-custo="380" style="display: none;">Fogão de 6 bocas</button>
-    <p class="custo">Custa 380 grana</p>
     <button id="goToRestaurant">Voltar para o Restaurante</button>
 </div>
 
