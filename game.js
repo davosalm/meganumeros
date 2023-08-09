@@ -5,8 +5,12 @@ document.addEventListener("DOMContentLoaded", function() {
     let ganhoQuentinha = 1;
     let pizzas = 0;
     let valorQuentinha = 1;
-    let intervaloProducao = 10000;
+    let intervaloProducao = 10000; // 10 segundos inicialmente
     let cozinheiros = 0;
+
+    function atualizarGranaLoja() {
+        document.getElementById('granaLoja').textContent = "Grana: " + grana;
+    }
 
     function producaoAutomatica() {
         quentinhas += ganhoQuentinha;
@@ -14,37 +18,11 @@ document.addEventListener("DOMContentLoaded", function() {
         setTimeout(producaoAutomatica, intervaloProducao);
     }
 
-document.querySelectorAll('.info').forEach(function(span) {
-    span.addEventListener('click', function() {
-        let descricao;
-        switch (span.previousElementSibling.textContent) {
-            case "Frigideira de Inox":
-                descricao = "Dobra a quantidade de quentinhas por clique.";
-                break;
-            case "Frigideira de Aço Cirúrgico":
-                descricao = "Permite a produção de 4 quentinhas por clique.";
-                break;
-            case "Forno a Lenha":
-                descricao = "Permite a produção e venda de pizzas.";
-                break;
-            case "Caixa registradora":
-                descricao = "Dobra o valor de venda de cada quentinha.";
-                break;
-            case "Cozinheiro":
-                descricao = "Aumenta a produção automática de quentinhas.";
-                break;
-            case "The Bear":
-                descricao = "Produz mais 10 quentinhas automaticamente a cada segundo.";
-                break;
-        }
-        alert(descricao);
-    });
-});
-
     document.getElementById('iniciarJogo').addEventListener('click', function() {
         const nomeRestaurante = prompt('Qual é o nome do seu restaurante?');
         if (nomeRestaurante) {
-            document.querySelector('h2').textContent = nomeRestaurante;
+            document.getElementById('tituloRestaurante').textContent = nomeRestaurante;
+            document.getElementById('tituloRestaurante').style.color = 'blue';
         }
         document.getElementById('menu').style.display = 'none';
         document.getElementById('game').style.display = 'block';
@@ -61,11 +39,30 @@ document.querySelectorAll('.info').forEach(function(span) {
         quentinhas = 0;
         document.getElementById('quentinhas').textContent = "Quentinhas: " + quentinhas;
         document.getElementById('grana').textContent = "Grana: " + grana;
+        atualizarGranaLoja();
+    });
+
+    document.getElementById('produzirPizza').addEventListener('click', function() {
+        pizzas += 1;
+        document.getElementById('pizzas').textContent = "Pizzas: " + pizzas;
+    });
+
+    document.getElementById('venderPizza').addEventListener('click', function() {
+        if (pizzas > 0) {
+            grana += 12; // Venda de uma pizza
+            pizzas--;
+            document.getElementById('pizzas').textContent = "Pizzas: " + pizzas;
+            document.getElementById('grana').textContent = "Grana: " + grana;
+            atualizarGranaLoja();
+        } else {
+            alert("Você não tem pizzas para vender.");
+        }
     });
 
     document.getElementById('goToShop').addEventListener('click', function() {
         document.getElementById('game').style.display = 'none';
         document.getElementById('loja').style.display = 'block';
+        atualizarGranaLoja();
     });
 
     document.getElementById('goToRestaurant').addEventListener('click', function() {
@@ -136,6 +133,33 @@ document.querySelectorAll('.info').forEach(function(span) {
             } else {
                 alert('Você não tem grana suficiente para comprar este item!');
             }
+
+document.querySelectorAll('.info').forEach(function(span) {
+    span.addEventListener('click', function() {
+        let buttonItem = span.previousElementSibling;  // Pega o botão do item relacionado ao emoji de interrogação clicado
+
+        switch(buttonItem.textContent) {
+            case "Frigideira de Inox":
+                alert('A Frigideira de Inox permite produzir o dobro de quentinhas por clique.');
+                break;
+            case "Frigideira de Aço Cirúrgico":
+                alert('A Frigideira de Aço Cirúrgico permite produzir quatro vezes mais quentinhas por clique.');
+                break;
+            case "Forno a Lenha":
+                alert('O Forno a Lenha permite produzir pizzas que podem ser vendidas por 12 grana cada.');
+                break;
+            case "Caixa registradora":
+                alert('A Caixa registradora dobra o valor de venda de cada quentinha.');
+                break;
+            case "Cozinheiro":
+                alert('Cada Cozinheiro reduz o tempo de produção automática de quentinhas em 1 segundo.');
+                break;
+            case "The Bear":
+                alert('The Bear aumenta a produção automática em 8 quentinhas por segundo.');
+                break;
+        }
+    });
+});
         });
     });
 });
