@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+button {
+    padding: 5px 12px;
+    font-size: 14px;
+    margin: 4px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 25px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+}
+
+button:active {
+    transform: translateY(2px);
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+button#produzirQuentinha {
+    background-color: #4CAF50;
+}
+
+button#venderQuentinha {
+    background-color: #008CBA;
+}
+
+button.itemLoja {
+    background-color: #f44336;
+}
+
+button#goToShop, button#goToRestaurant, button#apagarDados, button#iniciarJogo {
+    background-color: #e7e7e7; 
+    color: black; 
+}
+
+p.custo {
+    font-size: 12px;
+    text-align: center;
+    margin-top: -5px;
+}
+
+.imagem-botao img {
+    width: 50px;
+    height: 50px;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}

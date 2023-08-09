@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Jogo das Quentinhas</title>
+</head>
+<body>
+
+<div id="menu">
+    <h2>Bem-vindo ao Jogo das Quentinhas!</h2>
+    <button id="iniciarJogo">Iniciar Jogo</button>
+    <button id="apagarDados">Apagar todos os dados</button>
+</div>
+
+<div id="game" style="display: none;">
+    <h2>Seu Restaurante</h2>
+    <p id="quentinhas">Quentinhas: 0</p>
+    <p id="grana">Grana: 0</p>
+    <button id="produzirQuentinha">Produzir quentinha</button>
+    <button id="venderQuentinha">Vender Quentinhas</button>
+    <button id="goToShop">Ir para loja</button>
+</div>
+
+<div id="loja" style="display: none;">
+    <h2>Loja</h2>
+    <p id="granaLoja">Grana: 0</p>
+    <button class="itemLoja" data-custo="300">Caixa registradora</button>
+    <p class="custo">Custa 300 grana</p>
+    <button class="itemLoja" data-custo="80">Cozinheiro</button>
+    <p class="custo">Custa 80 grana</p>
+    <button class="itemLoja" data-custo="650">Fogão de 4 bocas</button>
+    <p class="custo">Custa 650 grana</p>
+    <button class="itemLoja" data-custo="380" style="display: none;">Fogão de 6 bocas</button>
+    <p class="custo">Custa 380 grana</p>
+    <button id="goToRestaurant">Voltar para o Restaurante</button>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
