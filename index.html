@@ -1,46 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Jogo das Quentinhas</title>
+    <title>Números da Sorte</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f2f2f2;
+            color: #333;
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        h1, h2 {
+            color: #4a47a3;
+        }
+
+        #numerosDaSorte, #resultadoMegaSena {
+            font-size: 24px;
+            margin: 20px auto;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: block;
+            max-width: 500px;
+            text-align: left;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #4a47a3;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            background-color: #6b5eac;
+        }
+
+        #resultadoMegaSena {
+            background-color: #eef2f7;
+            padding: 20px;
+            margin-top: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
 <body>
+    <h1>Números da Sorte</h1>
+    <button onclick="gerarNumeros()">Gerar Números da Sorte</button>
+    <div id="numerosDaSorte">Clique no botão para gerar os números</div>
+    
+    <div id="resultadoMegaSena">
+        <h2>Último Resultado da Mega Sena</h2>
+        <p id="dataApuracao"></p>
+        <p id="dezenasSorteadas"></p>
+    </div>
 
-<div id="menu">
-    <h2>QUENTINHA DUNGEON!</h2>
-    <button id="iniciarJogo">Iniciar Jogo</button>
-</div>
+    <script>
+        function gerarNumeros() {
+            let numeros = [];
+            while (numeros.length < 6) {
+                let num = Math.floor(Math.random() * 100) + 1;
+                if (!numeros.includes(num)) {
+                    numeros.push(num);
+                }
+            }
+            numeros.sort((a, b) => a - b);
+            let numerosFormatados = numeros.map(num => num.toString().padStart(2, '0'));
+            document.getElementById('numerosDaSorte').innerText = numerosFormatados.join(', ');
+        }
 
-<div id="game" style="display: none;">
-    <h2 id="tituloRestaurante">Seu Restaurante</h2>
-    <p id="itensComprados" style="font-size: smaller;"></p>
-    <p id="precoQuentinha" style="font-size: smaller;">Preço por quentinha: 1 grana</p>
-    <p id="prodQuentinhaPorSeg" style="font-size: smaller;">Produção automática: 1 quentinha/10s</p>
-    <p id="quentinhas">Quentinhas: 0</p>
-    <p id="pizzas" style="display: none;">Pizzas: 0</p>
-    <p id="grana">Grana: 0</p>
-    <button id="produzirQuentinha">Produzir quentinha</button>
-    <button id="produzirPizza" style="display: none;">Fazer Pizza</button>
-    <button id="venderPizza" style="display: none;">Vender Pizza</button>
-    <button id="venderQuentinha">Vender Quentinhas</button>
-    <button id="goToShop">Ir para loja</button>
-</div>
+        async function obterDadosMegaSena() {
+            try {
+                const url = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena';
+                const response = await fetch(url);
+                const data = await response.json();
 
-<div id="loja" style="display: none;">
-    <h3>Loja</h3>
-    <button class="itemLoja" data-custo="750">Frigideira de Inox</button> <span class="info">❓</span><span class="custo">Custo: 750 grana</span><br>
-    <button class="itemLoja" data-custo="3500">Frigideira de Aço Cirúrgico</button> <span class="info">❓</span><span class="custo">Custo: 3500 grana</span><br>
-    <button class="itemLoja" data-custo="10000">Forno a Lenha</button> <span class="info">❓</span><span class="custo">Custo: 10000 grana</span><br>
-    <button class="itemLoja" data-custo="300">Caixa registradora</button> <span class="info">❓</span><span class="custo">Custo: 300 grana</span><br>
-    <button class="itemLoja" data-custo="80">Cozinheiro</button> <span class="info">❓</span><span class="custo">Custo: 80 grana</span><br>
-    <button class="itemLoja" data-custo="8000">The Bear</button> <span class="info">❓</span><span class="custo">Custo: 8000 grana</span><br>
-    <p id="granaLoja">Grana: 0</p>
-    <button id="goToRestaurant">Voltar para o Restaurante</button>
-</div>
+                const ultimoResultado = data.ultimoConcurso;
+                
+                document.getElementById('dataApuracao').innerText = 'Data da Apuração: ' + ultimoResultado.dataApuracao;
+                document.getElementById('dezenasSorteadas').innerText = 'Dezenas Sorteadas: ' + ultimoResultado.dezenasSorteadasOrdemSorteio.join(', ');
+            } catch (error) {
+                console.error('Erro ao obter dados do sorteio:', error);
+            }
+        }
 
-<script src="game.js"></script>
+        window.onload = obterDadosMegaSena;
+    </script>
 </body>
 </html>
