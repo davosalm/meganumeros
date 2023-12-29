@@ -8,27 +8,32 @@
             background-color: #f2f2f2;
             color: #333;
             text-align: center;
-            padding-top: 50px;
+            padding-top: 30px;
         }
 
-        h1, h2 {
+        h1 {
             color: #4a47a3;
         }
 
-        #numerosDaSorte, #resultadoMegaSena {
-            font-size: 24px;
-            margin: 20px auto;
+        .container {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .result-box {
+            font-size: 20px;
+            margin: 10px auto;
             padding: 10px;
             border-radius: 8px;
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             display: block;
-            max-width: 500px;
             text-align: left;
+            width: 80%;
         }
 
         button {
-            padding: 10px 20px;
+            padding: 8px 16px;
             font-size: 16px;
             color: #fff;
             background-color: #4a47a3;
@@ -36,38 +41,51 @@
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
-            margin-bottom: 20px;
         }
 
         button:hover {
             background-color: #6b5eac;
         }
 
-        #resultadoMegaSena {
+        #historicoNumeros {
             background-color: #eef2f7;
-            padding: 20px;
-            margin-top: 10px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            height: 150px;
+            overflow: auto;
+            color: #6b5eac; /* Cor da fonte para histórico */
+        }
+
+        #resultadoMegaSena {
+            background-color: #d1e8e2;
+            color: #3a6351; /* Cor da fonte para resultado da Mega Sena */
+        }
+
+        h4 {
+            font-size: 1.2em; /* Tamanho da fonte para h4 */
         }
     </style>
 </head>
 <body>
-    <h1>Números da Sorte</h1>
-    <button onclick="gerarNumeros()">Gerar Números da Sorte</button>
-    <div id="numerosDaSorte">Clique no botão para gerar os números</div>
-    
-    <div id="resultadoMegaSena">
-        <h2>Último Resultado da Mega Sena</h2>
-        <p id="dataApuracao"></p>
-        <p id="dezenasSorteadas"></p>
+    <div class="container">
+        <h1>Números da Sorte</h1>
+        <button onclick="gerarNumeros()">Gerar Números da Sorte</button>
+        <div id="numerosDaSorte" class="result-box"></div>
+        <div id="historicoNumeros" class="result-box">
+            <h4>Últimas Sequências Geradas</h4>
+        </div>
+        <div id="resultadoMegaSena" class="result-box">
+            <h2>Último Resultado da Mega Sena</h2>
+            <p id="dataApuracao"></p>
+            <p id="dezenasSorteadas"></p>
+        </div>
     </div>
 
     <script>
+        let historico = [];
+
         function gerarNumeros() {
             let numeros = [];
             while (numeros.length < 6) {
-                let num = Math.floor(Math.random() * 100) + 1;
+                let num = Math.floor(Math.random() * 99) + 1;
                 if (!numeros.includes(num)) {
                     numeros.push(num);
                 }
@@ -75,18 +93,28 @@
             numeros.sort((a, b) => a - b);
             let numerosFormatados = numeros.map(num => num.toString().padStart(2, '0'));
             document.getElementById('numerosDaSorte').innerText = numerosFormatados.join(', ');
+
+            // Adicionando ao histórico
+            if (historico.length >= 6) {
+                historico.pop();
+            }
+            historico.unshift(numerosFormatados.join(', '));
+            atualizarHistorico();
+        }
+
+        function atualizarHistorico() {
+            let historicoElemento = document.getElementById('historicoNumeros');
+            historicoElemento.innerHTML = '<h4>Últimas Sequências Geradas</h4>' + historico.map(h => '<p>' + h + '</p>').join('');
         }
 
         async function obterDadosMegaSena() {
             try {
-                const url = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena';
+                const url = 'https://loteriascaixa-api.herokuapp.com/api/megasena/latest';
                 const response = await fetch(url);
                 const data = await response.json();
 
-                const ultimoResultado = data.ultimoConcurso;
-                
-                document.getElementById('dataApuracao').innerText = 'Data da Apuração: ' + ultimoResultado.dataApuracao;
-                document.getElementById('dezenasSorteadas').innerText = 'Dezenas Sorteadas: ' + ultimoResultado.dezenasSorteadasOrdemSorteio.join(', ');
+                document.getElementById('dataApuracao').innerText = 'Data da Apuração: ' + data.data;
+                document.getElementById('dezenasSorteadas').innerText = 'Dezenas Sorteadas: ' + data.dezenas.join(', ');
             } catch (error) {
                 console.error('Erro ao obter dados do sorteio:', error);
             }
