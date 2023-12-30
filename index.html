@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Números da Sorte</title>
+    <title>Mega Números</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -22,14 +22,14 @@
         }
 
         .result-box {
-            font-size: 20px;
+            font-size: 18px; /* Tamanho original era 20 */
             margin: 20px auto;
             padding: 10px;
             border-radius: 8px;
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             display: block;
-            text-align: left;
+            text-align: center;
             width: 80%;
         }
 
@@ -57,7 +57,7 @@
         }
 
         #numerosDaSorte {
-            height: 30px; /* Altura fixa */
+            height: 30px; /* Altura fixa da exibição dos números */
         }
 
         #historicoNumeros {
@@ -68,22 +68,22 @@
         #resultadoMegaSena {
             background-color: #d1e8e2;
             color: #3a6351; /* Cor da fonte para resultado da Mega Sena */
-            font-size: 16px; /* Fonte menor */
+            font-size: 16px; /* Fonte um pouco menor */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Números da Sorte</h1>
+        <h1>MEGA NÚMEROS</h1>
         <div id="numerosDaSorte" class="result-box"></div>
-        <button onclick="gerarNumeros()">Gerar Números da Sorte</button>
+        <button onclick="gerarNumeros()">Gerar Números</button>
         <hr>
         <div id="historicoNumeros" class="result-box">
-            <h4>Últimas Sequências Geradas</h4>
+            <h4>Últimas seis sequências geradas</h4>
         </div>
         <hr>
         <div id="resultadoMegaSena" class="result-box">
-            <h2>Último Resultado da Mega Sena</h2>
+            <h5>Último Resultado da Mega Sena</h5>
             <p id="dataApuracao"></p>
             <p id="dezenasSorteadas"></p>
             <p id="localGanhador"></p>
@@ -136,7 +136,7 @@
 
         function atualizarHistorico() {
             let historicoElemento = document.getElementById('historicoNumeros');
-            historicoElemento.innerHTML = '<h4>Últimas Sequências Geradas</h4>' + historico.map(h => '<p>' + h + '</p>').join('');
+            historicoElemento.innerHTML = '<h5>Últimas sequências geradas</h5>' + historico.map(h => '<p>' + h + '</p>').join('');
         }
 
         async function obterDadosMegaSena() {
@@ -145,9 +145,9 @@
                 const response = await fetch(url);
                 const data = await response.json();
 
-                document.getElementById('dataApuracao').innerText = 'Data da Apuração: ' + data.data;
-                document.getElementById('dezenasSorteadas').innerText = 'Dezenas Sorteadas: ' + data.dezenas.join(', ');
-                document.getElementById('localGanhador').innerText = 'Localização do Ganhador: ' + data.local;
+                document.getElementById('dataApuracao').innerText = 'Data da apuração: ' + data.data;
+                document.getElementById('dezenasSorteadas').innerText = 'Dezenas sorteadas: ' + data.dezenas.join(', ');
+                document.getElementById('localGanhador').innerText = 'Localização e lotérica do ganhador: ' + data.local;
             } catch (error) {
                 console.error('Erro ao obter dados do sorteio:', error);
             }
