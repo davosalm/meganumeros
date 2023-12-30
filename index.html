@@ -83,17 +83,24 @@
         </div>
         <hr>
         <div id="resultadoMegaSena" class="result-box">
-            <h5>Último Resultado da Mega Sena</h5>
+            <h2>Último Resultado da Mega Sena</h2>
             <p id="dataApuracao"></p>
             <p id="dezenasSorteadas"></p>
             <p id="localGanhador"></p>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <script>
         let historico = [];
+        let primeiraVez = true;
 
         function gerarNumeros() {
+            if (primeiraVez) {
+                dispararConfetti();
+                primeiraVez = false;
+            }
+
             let numeros = [];
             while (numeros.length < 6) {
                 let num = Math.floor(Math.random() * 99) + 1;
@@ -112,6 +119,21 @@
             atualizarHistorico();
         }
 
+        function dispararConfetti() {
+            confetti({
+                angle: 60,
+                spread: 55,
+                particleCount: 100,
+                origin: { y: 0.6 }
+            });
+            confetti({
+                angle: 120,
+                spread: 55,
+                particleCount: 100,
+                origin: { y: 0.6 }
+            });
+        }
+
         function atualizarHistorico() {
             let historicoElemento = document.getElementById('historicoNumeros');
             historicoElemento.innerHTML = '<h4>Últimas Sequências Geradas</h4>' + historico.map(h => '<p>' + h + '</p>').join('');
@@ -125,7 +147,7 @@
 
                 document.getElementById('dataApuracao').innerText = 'Data da Apuração: ' + data.data;
                 document.getElementById('dezenasSorteadas').innerText = 'Dezenas Sorteadas: ' + data.dezenas.join(', ');
-                document.getElementById('localGanhador').innerText = 'Cidade do Ganhador: ' + data.local;
+                document.getElementById('localGanhador').innerText = 'Localização do Ganhador: ' + data.local;
             } catch (error) {
                 console.error('Erro ao obter dados do sorteio:', error);
             }
