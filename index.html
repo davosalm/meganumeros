@@ -22,7 +22,7 @@
         }
 
         .result-box {
-            font-size: 18px; /* Tamanho original era 20 */
+            font-size: 20px; /* Tamanho original era 20 */
             margin: 20px auto;
             padding: 10px;
             border-radius: 8px;
@@ -83,7 +83,7 @@
         </div>
         <hr>
         <div id="resultadoMegaSena" class="result-box">
-            <h5>Último Resultado da Mega Sena</h5>
+            <h4>Último Resultado da Mega Sena</h4>
             <p id="dataApuracao"></p>
             <p id="dezenasSorteadas"></p>
             <p id="localGanhador"></p>
@@ -136,7 +136,7 @@
 
         function atualizarHistorico() {
             let historicoElemento = document.getElementById('historicoNumeros');
-            historicoElemento.innerHTML = '<h5>Últimas sequências geradas</h5>' + historico.map(h => '<p>' + h + '</p>').join('');
+            historicoElemento.innerHTML = '<h4>Últimas sequências geradas</h4>' + historico.map(h => '<p>' + h + '</p>').join('');
         }
 
         async function obterDadosMegaSena() {
