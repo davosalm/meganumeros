@@ -16,13 +16,14 @@
         }
 
         .container {
-            max-width: 500px;
+            max-width: 100%;
             margin: auto;
+            padding: 0 10px;
         }
 
         .result-box {
             font-size: 20px;
-            margin: 10px auto;
+            margin: 20px auto;
             padding: 10px;
             border-radius: 8px;
             background-color: #fff;
@@ -41,41 +42,51 @@
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin-top: 20px;
         }
 
         button:hover {
             background-color: #6b5eac;
         }
 
+        hr {
+            border: none;
+            height: 1px;
+            background-color: #ddd;
+            margin: 20px 0;
+        }
+
+        #numerosDaSorte {
+            height: 30px; /* Altura fixa */
+        }
+
         #historicoNumeros {
             background-color: #eef2f7;
-            height: 150px;
-            overflow: auto;
             color: #6b5eac; /* Cor da fonte para histórico */
         }
 
         #resultadoMegaSena {
             background-color: #d1e8e2;
             color: #3a6351; /* Cor da fonte para resultado da Mega Sena */
-        }
-
-        h4 {
-            font-size: 1.2em; /* Tamanho da fonte para h4 */
+            font-size: 16px; /* Fonte menor */
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Números da Sorte</h1>
-        <button onclick="gerarNumeros()">Gerar Números da Sorte</button>
         <div id="numerosDaSorte" class="result-box"></div>
+        <button onclick="gerarNumeros()">Gerar Números da Sorte</button>
+        <hr>
         <div id="historicoNumeros" class="result-box">
             <h4>Últimas Sequências Geradas</h4>
         </div>
+        <hr>
         <div id="resultadoMegaSena" class="result-box">
-            <h2>Último Resultado da Mega Sena</h2>
+            <h5>Último Resultado da Mega Sena</h5>
             <p id="dataApuracao"></p>
             <p id="dezenasSorteadas"></p>
+            <p id="localGanhador"></p>
         </div>
     </div>
 
@@ -94,7 +105,6 @@
             let numerosFormatados = numeros.map(num => num.toString().padStart(2, '0'));
             document.getElementById('numerosDaSorte').innerText = numerosFormatados.join(', ');
 
-            // Adicionando ao histórico
             if (historico.length >= 6) {
                 historico.pop();
             }
@@ -115,6 +125,7 @@
 
                 document.getElementById('dataApuracao').innerText = 'Data da Apuração: ' + data.data;
                 document.getElementById('dezenasSorteadas').innerText = 'Dezenas Sorteadas: ' + data.dezenas.join(', ');
+                document.getElementById('localGanhador').innerText = 'Cidade do Ganhador: ' + data.local;
             } catch (error) {
                 console.error('Erro ao obter dados do sorteio:', error);
             }
